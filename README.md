@@ -27,25 +27,34 @@ Things you may want to cover:
 | Column                | Type      | Options                   |
 | --------------------- | --------- | ------------------------- |
 | nickname              | string    | null: false               |
-| first name            | string    | null: false               |
-| last name             | string    | null: false               |
+| first_name            | string    | null: false               |
+| last_name             | string    | null: false               |
+| first_name_kana       | string    | null: false               |
+| last_name_kana        | string    | null: false               |
 | email                 | string    | null: false, unique: true |
 | encrypted_password    | string    | null: false               |
-| birthday              | integer   | null: false               |
+| birthday              | datetime  | null: false               |
+### Association users
+has_many :items
+has_many :purchases
+has_many :comments
 
-
-## timesテーブル
+## itemsテーブル
 | Column             | Type          | Options                        |
 | ------------------ | ------------- | ------------------------------ |
 | user               | references    | null: false, foreign_key: true |
 | exhibits_name      | string        | null: false                    |
-| exhibits_text      | string        | null: false                    |
+| exhibits_text      | text          | null: false                    |
 | money              | integer       | null: false                    |
 | category           | string        | null: false                    |
 | situation          | string        | null: false                    |
 | shipping_cost      | string        | null: false                    |
 | delivery_area      | string        | null: false                    |
 | shipping_days      | integer       | null: false                    |
+### Association items
+belongs_to :user
+has_one :purchases
+has_many :comments
 
 
 ## commentsテーブル
@@ -54,6 +63,9 @@ Things you may want to cover:
 | content            | text       | null: false                    |
 | time               | references | null: false, foreign_key: true |
 | user               | references | null: false, foreign_key: true |
+### Association comments
+belongs_to :user
+belongs_to :item
 
 
 ## purchasesテーブル
@@ -61,15 +73,21 @@ Things you may want to cover:
 | ------------------ | ---------- | ------------------------------ |
 | user               | references | null: false, foreign_key: true |
 | item               | references | null: false, foreign_key: true |
+### Association purchases
+belongs_to :user
+belongs_to :item
+has_one :sends
 
 
 ## sendsテーブル
 | Column                | Type       | Options                        |
 | --------------------- | ---------- | ------------------------------ |
-| purchaser             | references | null: false, foreign_key: true |
-| post_code             | integer    | null: false                    |
-| prefecture            | string     | null: false                    |
+| user                  | references | null: false, foreign_key: true |
+| post_code             | string     | null: false                    |
+| delivery_area         | string     | null: false                    |
 | city                  | string     | null: false                    |
-| address               | integer    | null: false                    |
+| address               | string     | null: false                    |
 | building              | string     |                                |
-| tell                  | integer    | null: false                    |
+| tell                  | string     | null: false                    |
+### Association sends
+belongs_to :purchases
