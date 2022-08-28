@@ -82,7 +82,7 @@ has_one :send
 ## sendsテーブル
 | Column                | Type       | Options                        |
 | --------------------- | ---------- | ------------------------------ |
-| purchases             | references | null: false, foreign_key: true |
+| purchase              | references | null: false, foreign_key: true |
 | post_code             | string     | null: false                    |
 | delivery_area_id      | integer    | null: false                    |
 | city                  | string     | null: false                    |
