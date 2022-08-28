@@ -33,7 +33,7 @@ Things you may want to cover:
 | last_name_kana        | string    | null: false               |
 | email                 | string    | null: false, unique: true |
 | encrypted_password    | string    | null: false               |
-| birthday              | datetime  | null: false               |
+| birthday              | date      | null: false               |
 ### Association users
 has_many :items
 has_many :purchases
@@ -46,14 +46,14 @@ has_many :comments
 | exhibits_name      | string        | null: false                    |
 | exhibits_text      | text          | null: false                    |
 | money              | integer       | null: false                    |
-| category           | string        | null: false                    |
-| situation          | string        | null: false                    |
-| shipping_cost      | string        | null: false                    |
-| delivery_area      | string        | null: false                    |
-| shipping_days      | integer       | null: false                    |
+| category_id        | integer       | null: false                    |
+| situation_id       | integer       | null: false                    |
+| shipping_cost_id   | integer       | null: false                    |
+| delivery_area_id   | integer       | null: false                    |
+| shipping_days_id   | integer       | null: false                    |
 ### Association items
 belongs_to :user
-has_one :purchases
+has_one :purchase
 has_many :comments
 
 
@@ -76,18 +76,18 @@ belongs_to :item
 ### Association purchases
 belongs_to :user
 belongs_to :item
-has_one :sends
+has_one :send
 
 
 ## sendsテーブル
 | Column                | Type       | Options                        |
 | --------------------- | ---------- | ------------------------------ |
-| user                  | references | null: false, foreign_key: true |
+| purchases             | references | null: false, foreign_key: true |
 | post_code             | string     | null: false                    |
-| delivery_area         | string     | null: false                    |
+| delivery_area_id      | integer    | null: false                    |
 | city                  | string     | null: false                    |
 | address               | string     | null: false                    |
 | building              | string     |                                |
 | tell                  | string     | null: false                    |
 ### Association sends
-belongs_to :purchases
+belongs_to :purchase
