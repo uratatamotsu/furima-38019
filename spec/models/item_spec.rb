@@ -30,28 +30,28 @@ RSpec.describe Item, type: :model do
         @item.valid?
         expect(@item.errors.full_messages).to include("Money can't be blank")
       end
-      it 'category_idが空では出品できない' do
-        @item.category_id = ''
+      it 'category_idが(---)では出品できない' do
+        @item.category_id = '1'
         @item.valid?
         expect(@item.errors.full_messages).to include("Category can't be blank")
       end
-      it 'situation_idが空では出品できない' do
-        @item.situation_id = ''
+      it 'situation_idが(---)では出品できない' do
+        @item.situation_id = '1'
         @item.valid?
         expect(@item.errors.full_messages).to include("Situation can't be blank")
       end
-      it 'shipping_cost_idが空では出品できない' do
-        @item.shipping_cost_id = ''
+      it 'shipping_cost_idが(---)では出品できない' do
+        @item.shipping_cost_id = '1'
         @item.valid?
         expect(@item.errors.full_messages).to include("Shipping cost can't be blank")
       end
-      it 'delivery_area_idが空では出品できない' do
-        @item.delivery_area_id = ''
+      it 'delivery_area_idが(---)では出品できない' do
+        @item.delivery_area_id = '1'
         @item.valid?
         expect(@item.errors.full_messages).to include("Delivery area can't be blank")
       end
-      it 'shipping_days_idが空では出品できない' do
-        @item.shipping_days_id = ''
+      it 'shipping_days_idが(---)では出品できない' do
+        @item.shipping_days_id = '1'
         @item.valid?
         expect(@item.errors.full_messages).to include("Shipping days can't be blank")
       end
@@ -70,8 +70,19 @@ RSpec.describe Item, type: :model do
         @item.valid?
         expect(@item.errors.full_messages).to include("Money must be less than or equal to 9999999")
       end
+      it '金額は全角数値では保存できない' do
+        @item.money = "１０００"
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Money is not a number")
+      end
+      it 'userが紐付いていなければ保存できない' do
+        @item.user = nil
+        @item.valid?
+        expect(@item.errors.full_messages).to include("User must exist")
+      end
       
     end
+
 
 
 
