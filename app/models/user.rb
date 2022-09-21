@@ -14,4 +14,5 @@ class User < ApplicationRecord
   validates :password, presence: true, format: { with: PASSWORD_REGEX}, allow_blank: true
 
   has_many :items
+  belongs_to :Purchase
 end

@@ -4,6 +4,7 @@ class ItemsController < ApplicationController
 
   def index
     @items = Item.order("created_at DESC")
+    @purchases = Purchase.all
   end
 
   def new
@@ -17,6 +18,11 @@ class ItemsController < ApplicationController
     else
       render :new
     end
+  end
+
+  def show
+    @items = Item.find(params[:id])
+    @purchases = Purchase.all
   end
 
   private
