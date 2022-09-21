@@ -4,7 +4,6 @@ class ItemsController < ApplicationController
 
   def index
     @items = Item.order("created_at DESC")
-    @purchases = Purchase.all
   end
 
   def new
@@ -22,7 +21,6 @@ class ItemsController < ApplicationController
 
   def show
     @items = Item.find(params[:id])
-    @purchases = Purchase.all
   end
 
   private
