@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :order_form do
-    user_id {1}
-    item_id {1}
+    user_id { Faker::Number.non_zero_digit }
+    item_id { Faker::Number.non_zero_digit }
     
 
     post_code          {'123-4567'}

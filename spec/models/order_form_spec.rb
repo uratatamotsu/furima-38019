@@ -14,6 +14,16 @@ RSpec.describe OrderForm, type: :model do
     end
 
     context '購入出来ない時' do
+      it 'user_id（購入者）が空だと購入できない' do
+        @order_form.user_id = ''
+        @order_form.valid?
+        expect(@order_form.errors.full_messages).to include("User can't be blank")
+      end
+      it 'item_id（購入商品）が空だと購入できない' do
+        @order_form.item_id = ''
+        @order_form.valid?
+        expect(@order_form.errors.full_messages).to include("Item can't be blank")
+      end
       it '郵便番号が無ければ購入出来ない' do
         @order_form.post_code = ''
         @order_form.valid?
@@ -44,9 +54,18 @@ RSpec.describe OrderForm, type: :model do
         @order_form.valid?
         expect(@order_form.errors.full_messages).to include("Token can't be blank")
       end
+      it '建物名が無くても購入できる' do
+        @order_form.building = ''
+        @order_form.valid?
+      end
 
-      it '郵便番号は、「3桁ハイフン4桁」でなければ購入出来ない' do
+      it '郵便番号は、ハイフンがなければ購入出来ない' do
         @order_form.post_code = '1234567'
+        @order_form.valid?
+        expect(@order_form.errors.full_messages).to include("Post code is invalid. Include hyphen(-)")
+      end
+      it ' 郵便番号は、「3桁ハイフン4桁」でなければ購入出来ない' do
+        @order_form.post_code = '123-456'
         @order_form.valid?
         expect(@order_form.errors.full_messages).to include("Post code is invalid. Include hyphen(-)")
       end
@@ -55,8 +74,13 @@ RSpec.describe OrderForm, type: :model do
         @order_form.valid?
         expect(@order_form.errors.full_messages).to include("Post code is invalid. Include hyphen(-)")
       end
-      it '電話番号は、10桁以上11桁以内でなければ購入出来ない' do
+      it '電話番号は、10桁以下では購入出来ない' do
         @order_form.tell = '0901234567'
+        @order_form.valid?
+        expect(@order_form.errors.full_messages).to include("Tell is invalid")
+      end
+      it '電話番号は、12桁以上では購入出来ない' do
+        @order_form.tell = '090123456789'
         @order_form.valid?
         expect(@order_form.errors.full_messages).to include("Tell is invalid")
       end

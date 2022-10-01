@@ -38,11 +38,8 @@ class ItemsController < ApplicationController
   end
 
   def show
-    if current_user.id == @item.user_id
-      render :show
-    elsif @item.order.present?
-      redirect_to root_path
-    end
+    current_user.id == @item.user_id
+    render :show
   end
 
   def destroy
