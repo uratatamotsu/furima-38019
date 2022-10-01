@@ -68,7 +68,7 @@ belongs_to :user
 belongs_to :item
 
 
-## purchasesテーブル
+## ordersテーブル
 | Column             | Type       | Options                        |
 | ------------------ | ---------- | ------------------------------ |
 | user               | references | null: false, foreign_key: true |
@@ -76,13 +76,13 @@ belongs_to :item
 ### Association purchases
 belongs_to :user
 belongs_to :item
-has_one :send
+has_one :purchases
 
 
-## sendsテーブル
+## purchasesテーブル
 | Column                | Type       | Options                        |
 | --------------------- | ---------- | ------------------------------ |
-| purchase              | references | null: false, foreign_key: true |
+| order                 | references | null: false, foreign_key: true |
 | post_code             | string     | null: false                    |
 | delivery_area_id      | integer    | null: false                    |
 | city                  | string     | null: false                    |
@@ -90,4 +90,4 @@ has_one :send
 | building              | string     |                                |
 | tell                  | string     | null: false                    |
 ### Association sends
-belongs_to :purchase
+belongs_to :order

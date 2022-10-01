@@ -21,7 +21,7 @@ class ItemsController < ApplicationController
   end
 
   def edit
-    if current_user == @item.user
+    if current_user == @item.user && @item.order.nil?
       render :edit
     else
       redirect_to root_path
@@ -38,6 +38,11 @@ class ItemsController < ApplicationController
   end
 
   def show
+    if current_user.id == @item.user_id
+      render :show
+    elsif @item.order.present?
+      redirect_to root_path
+    end
   end
 
   def destroy
