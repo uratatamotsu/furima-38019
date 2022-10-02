@@ -1,15 +1,21 @@
 require 'rails_helper'
 
 RSpec.describe OrderForm, type: :model do
-  before do
-    @order_form = FactoryBot.build(:order_form)
-  end
-
+  
   describe '商品の購入' do
+    before do
+      user = FactoryBot.create(:user)
+      item = FactoryBot.create(:item)
+      @order_form = FactoryBot.build(:order_form, user_id: user.id, item_id: item.id)
+    end
     
     context '購入できる時' do
       it 'user_id, item_id, post_code, delivery_area_id, city, address, tell, tokenがあれば購入できる' do
         expect(@order_form).to be_valid
+      end
+      it '建物名が無くても購入できる' do
+        @order_form.building = ''
+        @order_form.valid?
       end
     end
 
@@ -54,10 +60,6 @@ RSpec.describe OrderForm, type: :model do
         @order_form.valid?
         expect(@order_form.errors.full_messages).to include("Token can't be blank")
       end
-      it '建物名が無くても購入できる' do
-        @order_form.building = ''
-        @order_form.valid?
-      end
 
       it '郵便番号は、ハイフンがなければ購入出来ない' do
         @order_form.post_code = '1234567'
@@ -74,8 +76,8 @@ RSpec.describe OrderForm, type: :model do
         @order_form.valid?
         expect(@order_form.errors.full_messages).to include("Post code is invalid. Include hyphen(-)")
       end
-      it '電話番号は、10桁以下では購入出来ない' do
-        @order_form.tell = '0901234567'
+      it '電話番号は、9桁以下では購入出来ない' do
+        @order_form.tell = '090123456'
         @order_form.valid?
         expect(@order_form.errors.full_messages).to include("Tell is invalid")
       end
