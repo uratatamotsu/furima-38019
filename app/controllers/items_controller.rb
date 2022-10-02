@@ -38,8 +38,6 @@ class ItemsController < ApplicationController
   end
 
   def show
-    current_user.id == @item.user_id
-    render :show
   end
 
   def destroy
