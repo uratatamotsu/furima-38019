@@ -14,7 +14,7 @@ RSpec.describe OrderForm, type: :model do
         expect(@order_form).to be_valid
       end
       it '建物名が無くても購入できる' do
-        @order_form.building = ''
+        @order_form.building = nil
         @order_form.valid?
       end
     end
