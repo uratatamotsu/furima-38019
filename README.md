@@ -76,7 +76,7 @@ belongs_to :item
 ### Association purchases
 belongs_to :user
 belongs_to :item
-has_one :purchases
+has_one :purchase
 
 
 ## purchasesテーブル
