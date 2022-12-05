@@ -10,11 +10,14 @@
 #   https://dev.mysql.com/doc/refman/5.7/en/password-hashing.html
 #
 default: &default
+  adapter: mysql2
   encoding: utf8
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
 development:
   <<: *default
+  socket: /tmp/mysql.sock
+  database: furima_38019_development
   adapter: mysql2
   username: root
   password:
@@ -23,6 +26,7 @@ development:
 
 test:
   <<: *default
+  database: furima_38019_test
   adapter: mysql2
   username: root
   password:
@@ -31,6 +35,9 @@ test:
 
 production:
   <<: *default
+  database: furima_38019_production
+  username: furima_38019
+  password: <%= ENV['FURIMA_38019_DATABASE_PASSWORD'] %>
   adapter: postgresql
   url: <%= ENV['DATABASE_URL'] %>
 
